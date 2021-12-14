@@ -47,6 +47,12 @@ const questions = () => {
           name: 'officeNumber',
           message: 'What is your office number?'
         }])
+    .then(managerData => {
+      const newManager = new Manager(data.name, data.id, data.email, managerData.officeNumber)
+      employeeData.push(newManager)
+      console.log(employeeData)
+      addTeamMember()
+    })
     } else if (data.role == 'Engineer') {
       inquirer.prompt([
         {
@@ -54,16 +60,39 @@ const questions = () => {
           name: 'github',
           message: 'What is the name of your Github profile?'
         }])
+    .then(engineerData => {
+      const newEngineer = new Engineer(data.name, data.id, data.email, engineerData.github)
+      employeeData.push(newEngineer)
+      console.log(employeeData)
+      addTeamMember()
+    })
     } else if (data.role == 'Intern') {
       inquirer.prompt([
         {
           type: 'input',
           name: 'school',
           message: 'What school do you currently attend?'
-        }
-      ])
+        }])
+    .then(internData => {
+      const newIntern = new Intern(data.name, data.id, data.email, internData.school)
+      employeeData.push(newIntern)
+      console.log(employeeData)
+      addTeamMember()
+    })
     }
   })
+}
+
+const addTeamMember = () => {
+  inquirer.prompt({
+    type: 'confirm',
+    name: 'addMember',
+    message: 'Would you like to add another team member?'
+  })
+.then(data => {
+  if(data.addMember == true)
+  questions()
+})
 }
 
 questions()
