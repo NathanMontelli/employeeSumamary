@@ -85,14 +85,24 @@ const questions = () => {
 
 const addTeamMember = () => {
   inquirer.prompt({
-    type: 'confirm',
+    type: 'list',
     name: 'addMember',
-    message: 'Would you like to add another team member?'
+    message: 'Would you like to add another team member?',
+    choices: ['yes', 'no']
   })
 .then(data => {
-  if(data.addMember == true)
+  if(data.addMember == 'yes') {
   questions()
+  } else (data.addMember == 'no') {
+    
+  }
 })
+}
+
+const writeToFile = (fileName, data) => {
+  fs.writeFile(fileName, data, err => {
+    if (err) {console.log(err)}
+  })
 }
 
 questions()
